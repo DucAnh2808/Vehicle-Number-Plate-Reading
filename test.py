@@ -13,22 +13,24 @@ image = imutils.resize(image, width=500)
 cv2.imshow("Original Image", image)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-#cv2.imshow("1 - Grayscale Conversion", gray)
+# cv2.imshow("1 - Grayscale Conversion", gray)
 
 gray = cv2.bilateralFilter(gray, 11, 17, 17)
-#cv2.imshow("2 - Bilateral Filter", gray)
+# cv2.imshow("2 - Bilateral Filter", gray)
 
 edged = cv2.Canny(gray, 170, 200)
-#cv2.imshow("4 - Canny Edges", edged)
+# cv2.imshow("4 - Canny Edges", edged)
 
-(new, cnts, _) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+(cnts,_) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+# (new, cnts) = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+# cnts = [cnt.astype(np.int32) for cnt in cnt]
 cnts=sorted(cnts, key = cv2.contourArea, reverse = True)[:30] 
 NumberPlateCnt = None 
 
 count = 0
 for c in cnts:
         peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
+        approx = cv2.approxPolyDP(c, 00.02 * peri, True)
         if len(approx) == 4:  
             NumberPlateCnt = approx 
             break
@@ -39,7 +41,6 @@ new_image = cv2.drawContours(mask,[NumberPlateCnt],0,255,-1)
 new_image = cv2.bitwise_and(image,image,mask=mask)
 cv2.namedWindow("Final_image",cv2.WINDOW_NORMAL)
 cv2.imshow("Final_image",new_image)
-
 # Configuration for tesseract
 config = ('-l eng --oem 1 --psm 3')
 
