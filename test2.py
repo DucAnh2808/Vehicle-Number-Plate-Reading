@@ -6,9 +6,10 @@ import pytesseract
 import pandas as pd
 import time
 
-image = cv2.imread('a.jpg')
+image = cv2.imread('e.jpg')
 
 image = imutils.resize(image, width=500)       #resize lai anh
+print(image.shape)
 cv2.imshow("Original Image", image)
 
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)  #Chuyen sang mau gray
@@ -43,7 +44,9 @@ cv2.imshow("Final_image2",new_image)
 
 config = ('-l eng --oem 1 --psm 3')
 # Run tesseract OCR on image
-text = pytesseract.image_to_string(new_image, config=config)
+# text = pytesseract.image_to_string(new_image, config = config)
+text = pytesseract.image_to_string(new_image,config = '-l eng --oem 1 --psm 6')
+
 
 #Data is stored in CSV file
 raw_data = {'date': [time.asctime( time.localtime(time.time()) )], 
