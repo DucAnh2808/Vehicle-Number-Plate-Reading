@@ -5,8 +5,8 @@ import sys
 import pytesseract
 import pandas as pd
 import time
-
-image = cv2.imread('e.jpg')
+ 
+image = cv2.imread('e.jpg') 
 
 image = imutils.resize(image, width=500)       #resize lai anh
 print(image.shape)
@@ -54,7 +54,7 @@ raw_data = {'date': [time.asctime( time.localtime(time.time()) )],
 
 df = pd.DataFrame(raw_data, columns = ['date', 'v_number'])
 df.to_csv('data.csv')
-
+``
 # Print recognized text
 print(text)
 
